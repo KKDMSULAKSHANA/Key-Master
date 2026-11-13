@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { KeyCaps } from '../components/KeyCaps';
 import { Toast } from '../components/Toast';
@@ -94,8 +94,8 @@ export function ShortcutDetailsScreen({ navigation, route }) {
   }
 
   return (
-    <View style={[styles.screen, { backgroundColor: theme.background }]}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.screen, { backgroundColor: theme.background }]}>
+      <ScrollView contentContainerStyle={styles.content} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
           <View style={styles.headerLine}>
             <Text style={[styles.meta, { color: theme.muted }]}>{shortcut.app} · {shortcut.category}</Text>
@@ -214,7 +214,7 @@ export function ShortcutDetailsScreen({ navigation, route }) {
         onCancel={() => setDeleteDialog(false)}
         onConfirm={confirmDelete}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

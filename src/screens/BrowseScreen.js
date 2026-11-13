@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   appLabel: { fontSize: 13, fontWeight: '700', marginTop: 2 },
   summaryRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', minHeight: 36 },
   summary: { flex: 1, fontSize: 12, lineHeight: 17 },
-  clearAll: { alignItems: 'center', justifyContent: 'center', minHeight: 40, minWidth: 64 },
+  clearAll: { alignItems: 'center', justifyContent: 'center', minHeight: 44, minWidth: 64 },
   clearText: { fontSize: 12, fontWeight: '700' },
   list: { flex: 1 },
   listContent: { alignSelf: 'center', gap: spacing.sm, paddingBottom: spacing.xl, paddingHorizontal: spacing.md, paddingTop: spacing.xs, width: '100%' },

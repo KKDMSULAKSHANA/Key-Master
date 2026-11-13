@@ -5,11 +5,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "backgroundColor": "#F5F7FA",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "com.keymaster.app",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.keymaster.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
