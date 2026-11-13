@@ -1,18 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '../context/ThemeContext';
+import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { PlaceholderScreen } from '../screens/PlaceholderScreen';
 import { TabNavigator } from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 
-export function AppNavigator() {
+export function AppNavigator({ initialRouteName = 'Onboarding' }) {
   const { theme } = useTheme();
 
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Onboarding"
+        initialRouteName={initialRouteName}
         screenOptions={{
           contentStyle: { backgroundColor: theme.background },
           headerStyle: { backgroundColor: theme.surface },
@@ -22,7 +23,7 @@ export function AppNavigator() {
       >
         <Stack.Screen
           name="Onboarding"
-          component={PlaceholderScreen}
+          component={OnboardingScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="MainTabs" component={TabNavigator} options={{ headerShown: false }} />
