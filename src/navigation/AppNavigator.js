@@ -8,6 +8,7 @@ import { QuizScreen } from '../screens/QuizScreen';
 import { QuizResultScreen } from '../screens/QuizResultScreen';
 import { ProgressScreen } from '../screens/ProgressScreen';
 import { HelpAboutScreen } from '../screens/HelpAboutScreen';
+import { FlashcardsScreen } from '../screens/FlashcardsScreen';
 import { PlaceholderScreen } from '../screens/PlaceholderScreen';
 import { TabNavigator } from './TabNavigator';
 
@@ -37,7 +38,7 @@ export function AppNavigator({ initialRouteName = 'Onboarding' }) {
         <Stack.Screen name="AddEditShortcut" component={AddEditShortcutScreen} options={{ title: 'Add shortcut' }} />
         <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: 'Practice quiz' }} />
         <Stack.Screen name="QuizResult" component={QuizResultScreen} options={{ title: 'Quiz result' }} />
-        <Stack.Screen name="Flashcards" component={PlaceholderScreen} />
+        <Stack.Screen name="Flashcards" component={FlashcardsScreen} options={{ title: 'Flashcards' }} />
         <Stack.Screen name="Progress" component={ProgressScreen} />
         <Stack.Screen name="HelpAbout" component={HelpAboutScreen} options={{ title: 'Help and about' }} />
       </Stack.Navigator>

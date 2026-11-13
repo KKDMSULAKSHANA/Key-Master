@@ -10,6 +10,7 @@ import { usePreferences } from '../context/PreferencesContext';
 import { useShortcuts } from '../context/ShortcutsContext';
 import { useTheme } from '../context/ThemeContext';
 import { getShortcutText } from '../utils/keyLabels';
+import { playSelectionHaptic } from '../utils/haptics';
 import { spacing } from '../theme/spacing';
 
 const systems = [
@@ -21,7 +22,7 @@ const keyFields = { Windows: 'windows', macOS: 'mac', Linux: 'linux' };
 
 export function ShortcutDetailsScreen({ navigation, route }) {
   const { theme } = useTheme();
-  const { computerType } = usePreferences();
+  const { computerType, hapticsEnabled } = usePreferences();
   const {
     shortcuts, isLoading, toggleFavorite, setShortcutLearned, saveNote,
     getNote, isFavorite, isLearned, isUserShortcut, deleteUserShortcut, saveUserShortcut,
@@ -116,6 +117,7 @@ export function ShortcutDetailsScreen({ navigation, route }) {
                 accessibilityRole="button"
                 accessibilityLabel={favorite ? 'Remove favorite' : 'Add favorite'}
                 onPress={() => {
+                  void playSelectionHaptic(hapticsEnabled);
                   toggleFavorite(shortcutId);
                   if (favorite) setUndoMessage('Removed from favorites');
                 }}
@@ -126,7 +128,10 @@ export function ShortcutDetailsScreen({ navigation, route }) {
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel={learned ? 'Mark as not learned' : 'Mark as learned'}
-                onPress={() => setShortcutLearned(shortcutId, !learned)}
+                onPress={() => {
+                  void playSelectionHaptic(hapticsEnabled);
+                  setShortcutLearned(shortcutId, !learned);
+                }}
                 style={[styles.iconAction, { backgroundColor: theme.surfaceMuted }]}
               >
                 <Ionicons name={learned ? 'checkmark-circle' : 'checkmark-circle-outline'} size={20} color={learned ? theme.success : theme.text} />

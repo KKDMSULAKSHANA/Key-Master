@@ -56,6 +56,20 @@ export function PracticeScreen({ navigation }) {
           <ScoreStat label="Best score" value={quizHistory.length ? `${best}%` : '—'} theme={theme} />
         </View>
 
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Practice with flashcards"
+          onPress={() => navigation.navigate('Flashcards')}
+          style={({ pressed }) => [styles.flashcardLink, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.84 : 1 }]}
+        >
+          <View style={[styles.modeIcon, { backgroundColor: theme.surfaceMuted }]}><Ionicons name="albums-outline" size={22} color={theme.primary} /></View>
+          <View style={styles.modeCopy}>
+            <Text style={[styles.modeTitle, { color: theme.text }]}>Flashcards</Text>
+            <Text style={[styles.modeDescription, { color: theme.muted }]}>Flip through available {computerType} shortcuts.</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={theme.muted} />
+        </Pressable>
+
         <Text style={[styles.label, { color: theme.text }]}>Choose a quiz mode</Text>
         <View style={styles.modeList}>
           {modes.map((item) => {
@@ -128,6 +142,7 @@ const styles = StyleSheet.create({
   statLabel: { fontSize: 12 },
   label: { fontSize: 14, fontWeight: '700', marginBottom: -spacing.sm },
   modeList: { gap: spacing.sm },
+  flashcardLink: { alignItems: 'center', borderRadius: 13, borderWidth: 1, flexDirection: 'row', gap: spacing.sm, minHeight: 70, padding: spacing.sm },
   modeCard: { alignItems: 'center', borderRadius: 13, borderWidth: 1.5, flexDirection: 'row', gap: spacing.sm, minHeight: 76, padding: spacing.sm },
   modeIcon: { alignItems: 'center', borderRadius: 10, height: 42, justifyContent: 'center', width: 42 },
   modeCopy: { flex: 1, gap: 3 },
