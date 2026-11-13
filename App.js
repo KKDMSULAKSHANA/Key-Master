@@ -1,20 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ErrorBoundary } from './src/components/ErrorBoundary';
+import { PreferencesProvider } from './src/context/PreferencesContext';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
+import { AppNavigator } from './src/navigation/AppNavigator';
 
-export default function App() {
+function AppContent() {
+  const { themeMode } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ErrorBoundary>
+      <StatusBar style={themeMode === 'dark' ? 'light' : 'dark'} />
+      <AppNavigator />
+    </ErrorBoundary>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <PreferencesProvider>
+          <AppContent />
+        </PreferencesProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
+  );
+}

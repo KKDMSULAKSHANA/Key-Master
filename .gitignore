@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules/
+.vscode/
+.idea/
 
 # Expo
 .expo/
@@ -28,10 +30,12 @@ yarn-error.*
 
 # macOS
 .DS_Store
+*.log
 *.pem
 
 # local env files
 .env*.local
+.env
 
 # typescript
 *.tsbuildinfo
