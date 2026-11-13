@@ -8,12 +8,13 @@ import { useTheme } from '../context/ThemeContext';
 import { spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 import { KeyCaps } from '../components/KeyCaps';
+import { HintCard } from '../components/HintCard';
 
 const systemFields = { Windows: 'windows', macOS: 'mac', Linux: 'linux' };
 
 export function HomeScreen({ navigation }) {
   const { theme } = useTheme();
-  const { computerType } = usePreferences();
+  const { computerType, dismissedHints, dismissHint } = usePreferences();
   const { shortcuts, favorites, learned, quizHistory, isLoading } = useShortcuts();
   const keyField = systemFields[computerType] ?? 'windows';
   const available = useMemo(() => shortcuts.filter((shortcut) => Array.isArray(shortcut[keyField])), [keyField, shortcuts]);
@@ -58,6 +59,15 @@ export function HomeScreen({ navigation }) {
           <Text style={[styles.systemText, { color: theme.text }]}>{computerType}</Text>
           <Ionicons name="chevron-down" size={16} color={theme.muted} />
         </Pressable>
+
+        {!dismissedHints.home && (
+          <HintCard
+            icon="search-outline"
+            title="Find a shortcut fast"
+            message="Search by action, app, key, or a phrase you remember."
+            onDismiss={() => dismissHint('home')}
+          />
+        )}
 
         {todayShortcut && (
           <View style={[styles.feature, { backgroundColor: theme.surface, borderColor: theme.border }]}>

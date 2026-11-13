@@ -10,21 +10,27 @@ export function PreferencesProvider({ children }) {
   const [computerType, setComputerType] = useState('Windows');
   const [dailyGoal, setDailyGoal] = useState(5);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+  const [hapticsEnabled, setHapticsEnabled] = useState(true);
+  const [dismissedHints, setDismissedHints] = useState({});
   const [isPreferencesLoading, setIsPreferencesLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
 
     async function loadPreferences() {
-      const [savedSystem, savedGoal, savedOnboarding] = await Promise.all([
+      const [savedSystem, savedGoal, savedOnboarding, savedHaptics, savedHints] = await Promise.all([
         readStorage(STORAGE_KEYS.COMPUTER_TYPE, 'Windows'),
         readStorage(STORAGE_KEYS.DAILY_GOAL, 5),
         readStorage(STORAGE_KEYS.ONBOARDING_COMPLETED, false),
+        readStorage(STORAGE_KEYS.HAPTICS, true),
+        readStorage(STORAGE_KEYS.DISMISSED_HINTS, {}),
       ]);
       if (!active) return;
       setComputerType(validSystems.has(savedSystem) ? savedSystem : 'Windows');
       setDailyGoal(validGoals.has(savedGoal) ? savedGoal : 5);
       setOnboardingCompleted(savedOnboarding === true);
+      setHapticsEnabled(savedHaptics !== false);
+      setDismissedHints(savedHints && typeof savedHints === 'object' && !Array.isArray(savedHints) ? savedHints : {});
       setIsPreferencesLoading(false);
     }
 
@@ -44,8 +50,33 @@ export function PreferencesProvider({ children }) {
     if (!isPreferencesLoading) void writeStorage(STORAGE_KEYS.ONBOARDING_COMPLETED, onboardingCompleted);
   }, [isPreferencesLoading, onboardingCompleted]);
 
+  useEffect(() => {
+    if (!isPreferencesLoading) void writeStorage(STORAGE_KEYS.HAPTICS, hapticsEnabled);
+  }, [hapticsEnabled, isPreferencesLoading]);
+
+  useEffect(() => {
+    if (!isPreferencesLoading) void writeStorage(STORAGE_KEYS.DISMISSED_HINTS, dismissedHints);
+  }, [dismissedHints, isPreferencesLoading]);
+
+  function dismissHint(hintId) {
+    setDismissedHints((current) => ({ ...current, [hintId]: true }));
+  }
+
+  function resetPreferences() {
+    setComputerType('Windows');
+    setDailyGoal(5);
+    setOnboardingCompleted(false);
+    setHapticsEnabled(true);
+    setDismissedHints({});
+  }
+
   return (
-    <PreferencesContext.Provider value={{ computerType, setComputerType, dailyGoal, setDailyGoal, onboardingCompleted, setOnboardingCompleted, isPreferencesLoading }}>
+    <PreferencesContext.Provider value={{
+      computerType, setComputerType, dailyGoal, setDailyGoal,
+      onboardingCompleted, setOnboardingCompleted,
+      hapticsEnabled, setHapticsEnabled, dismissedHints, dismissHint,
+      resetPreferences, isPreferencesLoading,
+    }}>
       {children}
     </PreferencesContext.Provider>
   );

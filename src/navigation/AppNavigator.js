@@ -7,6 +7,7 @@ import { AddEditShortcutScreen } from '../screens/AddEditShortcutScreen';
 import { QuizScreen } from '../screens/QuizScreen';
 import { QuizResultScreen } from '../screens/QuizResultScreen';
 import { ProgressScreen } from '../screens/ProgressScreen';
+import { HelpAboutScreen } from '../screens/HelpAboutScreen';
 import { PlaceholderScreen } from '../screens/PlaceholderScreen';
 import { TabNavigator } from './TabNavigator';
 
@@ -38,7 +39,7 @@ export function AppNavigator({ initialRouteName = 'Onboarding' }) {
         <Stack.Screen name="QuizResult" component={QuizResultScreen} options={{ title: 'Quiz result' }} />
         <Stack.Screen name="Flashcards" component={PlaceholderScreen} />
         <Stack.Screen name="Progress" component={ProgressScreen} />
-        <Stack.Screen name="HelpAbout" component={PlaceholderScreen} options={{ title: 'Help and about' }} />
+        <Stack.Screen name="HelpAbout" component={HelpAboutScreen} options={{ title: 'Help and about' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

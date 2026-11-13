@@ -7,6 +7,7 @@ import { FilterChips } from '../components/FilterChips';
 import { FilterSheet } from '../components/FilterSheet';
 import { SearchBar } from '../components/SearchBar';
 import { ShortcutCard } from '../components/ShortcutCard';
+import { HintCard } from '../components/HintCard';
 import { usePreferences } from '../context/PreferencesContext';
 import { useShortcuts } from '../context/ShortcutsContext';
 import { useTheme } from '../context/ThemeContext';
@@ -21,7 +22,7 @@ const categories = [...new Set([
 
 export function BrowseScreen({ navigation, route }) {
   const { theme } = useTheme();
-  const { computerType } = usePreferences();
+  const { computerType, dismissedHints, dismissHint } = usePreferences();
   const { shortcuts, favorites, learned, recentSearches, addRecentSearch, isLoading } = useShortcuts();
   const [query, setQuery] = useState('');
   const [selectedApp, setSelectedApp] = useState('All');
@@ -97,6 +98,15 @@ export function BrowseScreen({ navigation, route }) {
           </Pressable>
         </View>
         <SearchBar value={query} onChangeText={setQuery} onFocus={() => setSearchFocused(true)} onSubmitEditing={submitSearch} />
+
+        {!dismissedHints.browse && (
+          <HintCard
+            icon="options-outline"
+            title="Narrow the list"
+            message="Choose an app or use Filters to sort by category, difficulty, and what you have learned."
+            onDismiss={() => dismissHint('browse')}
+          />
+        )}
 
         {searchFocused && !query.trim() && recentSearches.length > 0 && (
           <View style={[styles.recentBox, { backgroundColor: theme.surface, borderColor: theme.border }]}>

@@ -8,10 +8,10 @@ import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 
 function AppContent() {
-  const { themeMode, theme } = useTheme();
+  const { resolvedMode, theme, isThemeLoading } = useTheme();
   const { onboardingCompleted, isPreferencesLoading } = usePreferences();
 
-  if (isPreferencesLoading) {
+  if (isPreferencesLoading || isThemeLoading) {
     return (
       <View style={[styles.loading, { backgroundColor: theme.background }]}>
         <ActivityIndicator color={theme.primary} />
@@ -21,7 +21,7 @@ function AppContent() {
 
   return (
     <ErrorBoundary>
-      <StatusBar style={themeMode === 'dark' ? 'light' : 'dark'} />
+      <StatusBar style={resolvedMode === 'dark' ? 'light' : 'dark'} />
       <AppNavigator initialRouteName={onboardingCompleted ? 'MainTabs' : 'Onboarding'} />
     </ErrorBoundary>
   );

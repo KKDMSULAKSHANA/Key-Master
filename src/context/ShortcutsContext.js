@@ -152,6 +152,35 @@ export function ShortcutsProvider({ children }) {
     });
   }
 
+  function clearFavorites() {
+    setFavorites([]);
+  }
+
+  function clearLearned() {
+    setLearned([]);
+  }
+
+  function clearNotes() {
+    setNotes({});
+  }
+
+  function clearUserShortcuts() {
+    const userIds = new Set(userShortcuts.map((shortcut) => shortcut.id));
+    setUserShortcuts([]);
+    setFavorites((current) => current.filter((id) => !userIds.has(id)));
+    setLearned((current) => current.filter((id) => !userIds.has(id)));
+    setNotes((current) => Object.fromEntries(Object.entries(current).filter(([id]) => !userIds.has(id))));
+  }
+
+  function resetShortcutData() {
+    setFavorites([]);
+    setLearned([]);
+    setNotes({});
+    setRecentSearches([]);
+    setQuizHistory([]);
+    setUserShortcuts([]);
+  }
+
   const value = {
     shortcuts,
     bundledShortcuts,
@@ -169,6 +198,11 @@ export function ShortcutsProvider({ children }) {
     saveQuizSession,
     saveUserShortcut,
     deleteUserShortcut,
+    clearFavorites,
+    clearLearned,
+    clearNotes,
+    clearUserShortcuts,
+    resetShortcutData,
     isFavorite: (shortcutId) => favorites.includes(shortcutId),
     isLearned: (shortcutId) => learned.includes(shortcutId),
     getNote: (shortcutId) => notes[shortcutId] ?? '',
