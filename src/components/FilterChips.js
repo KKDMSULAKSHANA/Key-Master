@@ -7,7 +7,7 @@ export function FilterChips({ items, selected, onSelect, accessibilityPrefix = '
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
       {items.map((item) => {
-        const active = selected === item;
+        const active = Array.isArray(selected) ? selected.includes(item) : selected === item;
         return (
           <Pressable
             key={item}
