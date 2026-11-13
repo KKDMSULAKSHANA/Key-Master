@@ -1,0 +1,10 @@
+[
+  {"id":"windows-11","name":"Windows 11","type":"system","icon":"logo-windows"},
+  {"id":"macos","name":"macOS","type":"system","icon":"logo-apple"},
+  {"id":"linux-gnome","name":"Linux GNOME","type":"system","icon":"logo-tux"},
+  {"id":"vscode","name":"Visual Studio Code","type":"app","icon":"code-slash"},
+  {"id":"chrome","name":"Google Chrome","type":"app","icon":"logo-chrome"},
+  {"id":"word","name":"Microsoft Word","type":"app","icon":"document-text"},
+  {"id":"excel","name":"Microsoft Excel","type":"app","icon":"grid"},
+  {"id":"text-editing","name":"Text Editing (any app)","type":"app","icon":"create"}
+]

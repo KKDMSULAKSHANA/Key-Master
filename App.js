@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { PreferencesProvider } from './src/context/PreferencesContext';
+import { ShortcutsProvider } from './src/context/ShortcutsContext';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 
@@ -21,7 +22,9 @@ export default function App() {
     <SafeAreaProvider>
       <ThemeProvider>
         <PreferencesProvider>
-          <AppContent />
+          <ShortcutsProvider>
+            <AppContent />
+          </ShortcutsProvider>
         </PreferencesProvider>
       </ThemeProvider>
     </SafeAreaProvider>
