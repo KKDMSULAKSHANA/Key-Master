@@ -22,6 +22,7 @@ const operatingSystems = [
 const difficulties = new Set(['Beginner', 'Intermediate', 'Advanced']);
 const requiredFields = ['id', 'title', 'app', 'category', 'description', 'tip', 'createdAt'];
 const networkPattern = /\b(fetch|axios|XMLHttpRequest|WebView)\b|https?:\/\/|data:image\//i;
+const { buildQuizQuestions } = require('../src/utils/quizBuilder');
 const failures = [];
 
 function check(name, condition, detail = '') {
@@ -171,6 +172,27 @@ if (!shortcuts || !apps) {
     const systemsHaveQuizCoverage = operatingSystems.every(({ field }) => osCounts[field] >= 10);
     check('each operating system has at least 10 quiz candidates', systemsHaveQuizCoverage,
       operatingSystems.map(({ field, label }) => `${label}: ${osCounts[field]}`).join('; '));
+
+    const systemNames = { windows: 'Windows', mac: 'macOS', linux: 'Linux' };
+    const quizFailures = [];
+    for (const { field, label } of operatingSystems) {
+      for (const mode of ['guessShortcut', 'guessAction']) {
+        const questions = buildQuizQuestions({
+          shortcuts,
+          system: systemNames[field],
+          mode,
+          count: 10,
+        });
+        const valid = questions.length === 10 && questions.every((question) => (
+          Array.isArray(question.options)
+          && question.options.length === 4
+          && new Set(question.options).size === 4
+          && question.options.filter((option) => option === question.correctAnswer).length === 1
+        ));
+        if (!valid) quizFailures.push(`${label}/${mode}: ${questions.length} valid questions`);
+      }
+    }
+    check('quizBuilder builds 10 valid questions per OS and mode', quizFailures.length === 0, quizFailures.join('; '));
 
     console.log('\nANSWER REVIEW');
     console.log('ID | Action | Windows | Mac | Linux');

@@ -4,6 +4,9 @@ import { useTheme } from '../context/ThemeContext';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { ShortcutDetailsScreen } from '../screens/ShortcutDetailsScreen';
 import { AddEditShortcutScreen } from '../screens/AddEditShortcutScreen';
+import { QuizScreen } from '../screens/QuizScreen';
+import { QuizResultScreen } from '../screens/QuizResultScreen';
+import { ProgressScreen } from '../screens/ProgressScreen';
 import { PlaceholderScreen } from '../screens/PlaceholderScreen';
 import { TabNavigator } from './TabNavigator';
 
@@ -31,10 +34,10 @@ export function AppNavigator({ initialRouteName = 'Onboarding' }) {
         <Stack.Screen name="MainTabs" component={TabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Details" component={ShortcutDetailsScreen} options={{ title: 'Shortcut details' }} />
         <Stack.Screen name="AddEditShortcut" component={AddEditShortcutScreen} options={{ title: 'Add shortcut' }} />
-        <Stack.Screen name="Quiz" component={PlaceholderScreen} />
-        <Stack.Screen name="QuizResult" component={PlaceholderScreen} options={{ title: 'Quiz result' }} />
+        <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: 'Practice quiz' }} />
+        <Stack.Screen name="QuizResult" component={QuizResultScreen} options={{ title: 'Quiz result' }} />
         <Stack.Screen name="Flashcards" component={PlaceholderScreen} />
-        <Stack.Screen name="Progress" component={PlaceholderScreen} />
+        <Stack.Screen name="Progress" component={ProgressScreen} />
         <Stack.Screen name="HelpAbout" component={PlaceholderScreen} options={{ title: 'Help and about' }} />
       </Stack.Navigator>
     </NavigationContainer>
