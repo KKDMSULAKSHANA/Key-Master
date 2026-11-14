@@ -3,12 +3,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { KeyCaps } from '../components/KeyCaps';
+import { usePreferences } from '../context/PreferencesContext';
 import { useShortcuts } from '../context/ShortcutsContext';
 import { useTheme } from '../context/ThemeContext';
+import { playAnswerHaptic } from '../utils/haptics';
 import { spacing } from '../theme/spacing';
 
 export function QuizScreen({ navigation, route }) {
   const { theme } = useTheme();
+  const { hapticsEnabled } = usePreferences();
   const { saveQuizSession } = useShortcuts();
   const questions = route.params?.questions ?? [];
   const settings = route.params?.settings ?? { system: 'Windows', mode: 'guessShortcut' };
@@ -31,6 +34,7 @@ export function QuizScreen({ navigation, route }) {
   function answer(option) {
     if (selectedAnswer !== null || !question) return;
     setSelectedAnswer(option);
+    void playAnswerHaptic(hapticsEnabled, option === question.correctAnswer);
     if (option === question.correctAnswer) {
       setScore((current) => current + 1);
     } else {

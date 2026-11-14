@@ -7,11 +7,12 @@ import { UndoSnackbar } from '../components/UndoSnackbar';
 import { usePreferences } from '../context/PreferencesContext';
 import { useShortcuts } from '../context/ShortcutsContext';
 import { useTheme } from '../context/ThemeContext';
+import { playSelectionHaptic } from '../utils/haptics';
 import { spacing } from '../theme/spacing';
 
 export function SavedScreen({ navigation }) {
   const { theme } = useTheme();
-  const { computerType } = usePreferences();
+  const { computerType, hapticsEnabled } = usePreferences();
   const { shortcuts, favorites, learned, toggleFavorite, setShortcutLearned, isLoading } = useShortcuts();
   const [segment, setSegment] = useState('Favorites');
   const [undoMessage, setUndoMessage] = useState('');
@@ -23,6 +24,7 @@ export function SavedScreen({ navigation }) {
   }, [favorites, learned, segment, shortcuts]);
 
   function removeShortcut(shortcut) {
+    void playSelectionHaptic(hapticsEnabled);
     const wasFavorite = segment === 'Favorites';
     setLastRemoved({ id: shortcut.id, wasFavorite });
     if (wasFavorite) toggleFavorite(shortcut.id);

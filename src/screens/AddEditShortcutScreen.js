@@ -5,6 +5,7 @@ import { FilterChips } from '../components/FilterChips';
 import { usePreferences } from '../context/PreferencesContext';
 import { useShortcuts } from '../context/ShortcutsContext';
 import { useTheme } from '../context/ThemeContext';
+import { playSelectionHaptic } from '../utils/haptics';
 import { spacing } from '../theme/spacing';
 
 const systems = [
@@ -62,7 +63,7 @@ function makeTags(title, app, category) {
 
 export function AddEditShortcutScreen({ navigation, route }) {
   const { theme } = useTheme();
-  const { computerType } = usePreferences();
+  const { computerType, hapticsEnabled } = usePreferences();
   const { shortcuts, isLoading, saveUserShortcut, isUserShortcut } = useShortcuts();
   const shortcutId = route.params?.shortcutId;
   const current = shortcuts.find((item) => item.id === shortcutId);
@@ -169,6 +170,7 @@ export function AddEditShortcutScreen({ navigation, route }) {
       createdAt: current?.createdAt ?? new Date().toISOString().slice(0, 10),
     };
     savedRef.current = true;
+    void playSelectionHaptic(hapticsEnabled);
     saveUserShortcut(record);
     navigation.goBack();
   }
