@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import { HomeScreen } from '../screens/HomeScreen';
 import { BrowseScreen } from '../screens/BrowseScreen';
 import { SavedScreen } from '../screens/SavedScreen';
+import { PracticeScreen } from '../screens/PracticeScreen';
 import { PlaceholderScreen } from '../screens/PlaceholderScreen';
 
 const Tab = createBottomTabNavigator();
@@ -39,7 +40,7 @@ export function TabNavigator() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Browse" component={BrowseScreen} />
-      <Tab.Screen name="Practice" component={PlaceholderScreen} />
+      <Tab.Screen name="Practice" component={PracticeScreen} />
       <Tab.Screen name="Saved" component={SavedScreen} />
       <Tab.Screen name="Settings" component={PlaceholderScreen} />
     </Tab.Navigator>
