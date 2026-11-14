@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: 14, lineHeight: 20, marginTop: 3 },
   offlineBadge: { alignItems: 'center', borderRadius: 16, borderWidth: 1, flexDirection: 'row', gap: 5, minHeight: 34, paddingHorizontal: 10 },
   offlineText: { fontSize: 12, fontWeight: '700' },
-  systemChip: { alignItems: 'center', alignSelf: 'flex-start', borderRadius: 20, borderWidth: 1, flexDirection: 'row', gap: 8, minHeight: 42, paddingHorizontal: 13 },
+  systemChip: { alignItems: 'center', alignSelf: 'flex-start', borderRadius: 20, borderWidth: 1, flexDirection: 'row', gap: 8, minHeight: 44, paddingHorizontal: 13 },
   systemText: { fontSize: 14, fontWeight: '600' },
   feature: { borderRadius: 16, borderWidth: 1, gap: spacing.sm, padding: spacing.md },
   sectionHeading: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },

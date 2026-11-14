@@ -105,7 +105,13 @@ export function QuizScreen({ navigation, route }) {
               <Text style={[styles.exitText, { color: theme.text }]}>Exit</Text>
             </Pressable>
           </View>
-          <View accessibilityLabel={`${Math.round(progress * 100)} percent complete`} style={[styles.progressTrack, { backgroundColor: theme.surfaceMuted }]}>
+          <View
+            accessible
+            accessibilityRole="progressbar"
+            accessibilityLabel="Quiz progress"
+            accessibilityValue={{ min: 0, max: 100, now: Math.round(progress * 100) }}
+            style={[styles.progressTrack, { backgroundColor: theme.surfaceMuted }]}
+          >
             <View style={[styles.progressFill, { backgroundColor: theme.primary, width: `${progress * 100}%` }]} />
           </View>
 

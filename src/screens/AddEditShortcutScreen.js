@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { FilterChips } from '../components/FilterChips';
 import { usePreferences } from '../context/PreferencesContext';
@@ -46,7 +46,7 @@ function normalizeMainKey(value) {
   if (alias) return alias;
   if (/^[a-z]$/i.test(trimmed)) return trimmed.toUpperCase();
   if (/^\d$/.test(trimmed)) return trimmed;
-  return trimmed;
+  return [...allowedKeys].find((key) => key.toLowerCase() === trimmed.toLowerCase()) ?? trimmed;
 }
 
 function makeTags(title, app, category) {
@@ -186,8 +186,8 @@ export function AddEditShortcutScreen({ navigation, route }) {
   }
 
   return (
-    <View style={[styles.screen, { backgroundColor: theme.background }]}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.screen, { backgroundColor: theme.background }]}>
+      <ScrollView contentContainerStyle={styles.content} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
           <Text accessibilityRole="header" style={[styles.title, { color: theme.text }]}>{isEditing ? 'Edit shortcut' : 'Add a shortcut'}</Text>
           <Text style={[styles.subtitle, { color: theme.muted }]}>Your shortcut is saved only on this device.</Text>
@@ -287,7 +287,7 @@ export function AddEditShortcutScreen({ navigation, route }) {
         onCancel={() => setDiscardVisible(false)}
         onConfirm={discardChanges}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -334,14 +334,14 @@ const styles = StyleSheet.create({
   keySystem: { borderRadius: 13, borderWidth: 1, gap: spacing.sm, padding: spacing.sm },
   systemHead: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   systemName: { fontSize: 15, fontWeight: '700' },
-  availability: { alignItems: 'center', borderRadius: 14, borderWidth: 1, justifyContent: 'center', minHeight: 38, paddingHorizontal: 10 },
+  availability: { alignItems: 'center', borderRadius: 14, borderWidth: 1, justifyContent: 'center', minHeight: 44, paddingHorizontal: 10 },
   availabilityText: { fontSize: 12, fontWeight: '700' },
   helper: { fontSize: 12, fontWeight: '600' },
   selectedModifiers: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   selectedModifier: { borderRadius: 8, paddingHorizontal: 9, paddingVertical: 6 },
   selectedModifierText: { fontFamily: 'monospace', fontSize: 12, fontWeight: '700' },
   keyOptions: { gap: 7, paddingVertical: 3 },
-  keyOption: { alignItems: 'center', borderRadius: 9, borderWidth: 1, justifyContent: 'center', minHeight: 42, minWidth: 42, paddingHorizontal: 8 },
+  keyOption: { alignItems: 'center', borderRadius: 9, borderWidth: 1, justifyContent: 'center', minHeight: 44, minWidth: 44, paddingHorizontal: 8 },
   keyOptionText: { fontFamily: 'monospace', fontSize: 12, fontWeight: '700' },
   saveButton: { alignItems: 'center', borderRadius: 12, justifyContent: 'center', marginTop: spacing.sm, minHeight: 52 },
   saveText: { fontSize: 15, fontWeight: '700' },

@@ -39,5 +39,5 @@ export function SearchBar({ value, onChangeText, onFocus, onSubmitEditing }) {
 const styles = StyleSheet.create({
   container: { alignItems: 'center', borderRadius: 12, borderWidth: 1, flexDirection: 'row', gap: 10, minHeight: 50, paddingHorizontal: 14 },
   input: { flex: 1, fontSize: 15, minHeight: 48, paddingVertical: 8 },
-  clearButton: { alignItems: 'center', justifyContent: 'center', minHeight: 44, minWidth: 36 },
+  clearButton: { alignItems: 'center', justifyContent: 'center', minHeight: 44, minWidth: 44 },
 });
